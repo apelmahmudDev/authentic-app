@@ -1,8 +1,10 @@
 import { Container } from 'react-bootstrap';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AuthProvider from './contexts/AuthContext';
+import PrivateRoute from './components/PrivateRoute';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
@@ -18,6 +20,7 @@ const App = () => {
 							<Switch>
 								<Route path='/signup' component={Signup} />
 								<Route path='/login' component={Login} />
+								<PrivateRoute exact path='/' component={Dashboard} />
 							</Switch>
 						</AuthProvider>
 					</Router>
