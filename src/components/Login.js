@@ -30,7 +30,7 @@ const Login = () => {
 		<>
 			<Card>
 				<Card.Body>
-					<Card.Title className='text-center w-100'>Sign Up</Card.Title>
+					<Card.Title className='text-center w-100'>Login</Card.Title>
 					{/* will show error message on the ui */}
 					{error && (
 						<Alert className='text-center' variant='danger'>
