@@ -4,26 +4,22 @@ import { Card, Button, Form, Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 
-const Signup = () => {
+const Login = () => {
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
-	const { signup } = useAuth();
+	const { login } = useAuth();
 	const emailRef = useRef();
 	const passwordRef = useRef();
-	const passwordConfirmRef = useRef();
 	const history = useHistory();
 
-	// submit user information for signup
+	// submit user information for login
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-			return setError('Password do not match!');
-		}
 		try {
 			setError('');
 			setLoading(true);
-			await signup(emailRef.current.value, passwordRef.current.value);
-			await history.push('/login');
+			await login(emailRef.current.value, passwordRef.current.value);
+			await history.push('/');
 		} catch (err) {
 			setError(err.message);
 		}
@@ -60,26 +56,17 @@ const Signup = () => {
 								ref={passwordRef}
 							/>
 						</Form.Group>
-						<Form.Group>
-							<Form.Label>Confirm Password</Form.Label>
-							<Form.Control
-								type='password'
-								placeholder='Confirm Password'
-								required
-								ref={passwordConfirmRef}
-							/>
-						</Form.Group>
 						<Button
 							disabled={loading}
 							variant='primary'
 							type='submit'
 							className='w-100'
 						>
-							Sign Up
+							Login
 						</Button>
 					</Form>
 					<div className='text-center mt-2'>
-						Already have an account ? <Link to='/login'>Login</Link>
+						Need an account ? <Link to='/signup'>Create an account</Link>
 					</div>
 				</Card.Body>
 			</Card>
@@ -87,4 +74,4 @@ const Signup = () => {
 	);
 };
 
-export default Signup;
+export default Login;
