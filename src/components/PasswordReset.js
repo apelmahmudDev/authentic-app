@@ -2,24 +2,23 @@ import React, { useState } from 'react';
 import { useRef } from 'react';
 import { Card, Button, Form, Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const Login = () => {
+const Signup = () => {
 	const [error, setError] = useState('');
+	const [message, setMessage] = useState('');
 	const [loading, setLoading] = useState(false);
-	const { login } = useAuth();
+	const { passwordResetEmail } = useAuth();
 	const emailRef = useRef();
-	const passwordRef = useRef();
-	const history = useHistory();
 
-	// submit user information for login
+	// submit user information for reset password
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			setError('');
 			setLoading(true);
-			await login(emailRef.current.value, passwordRef.current.value);
-			await history.push('/');
+			await passwordResetEmail(emailRef.current.value);
+			setMessage('Check your email for further instructions');
 		} catch (err) {
 			setError(err.message);
 		}
@@ -30,11 +29,16 @@ const Login = () => {
 		<>
 			<Card>
 				<Card.Body>
-					<Card.Title className='text-center w-100'>Sign Up</Card.Title>
+					<Card.Title className='text-center w-100'>Password Reset</Card.Title>
 					{/* will show error message on the ui */}
 					{error && (
 						<Alert className='text-center' variant='danger'>
 							{error}
+						</Alert>
+					)}
+					{message && (
+						<Alert className='text-center' variant='success'>
+							{message}
 						</Alert>
 					)}
 					<Form onSubmit={handleSubmit}>
@@ -47,34 +51,22 @@ const Login = () => {
 								ref={emailRef}
 							/>
 						</Form.Group>
-						<Form.Group>
-							<Form.Label>Password</Form.Label>
-							<Form.Control
-								type='password'
-								placeholder='Password'
-								required
-								ref={passwordRef}
-							/>
-						</Form.Group>
 						<Button
 							disabled={loading}
 							variant='primary'
 							type='submit'
 							className='w-100'
 						>
-							Login
+							Reset Password
+						</Button>
+						<Button variant='default' type='submit' className='w-100'>
+							<Link to='/login'>Login</Link>
 						</Button>
 					</Form>
-					<div className='text-center mt-2'>
-						<Link to='/forgot-password'>Forgot Password ?</Link>
-					</div>
-					<div className='text-center mt-2'>
-						Need an account ? <Link to='/signup'>Create an account</Link>
-					</div>
 				</Card.Body>
 			</Card>
 		</>
 	);
 };
 
-export default Login;
+export default Signup;

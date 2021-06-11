@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AuthProvider from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+import PasswordReset from './components/PasswordReset';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
 								<Route path='/signup' component={Signup} />
 								<Route path='/login' component={Login} />
 								<PrivateRoute exact path='/' component={Dashboard} />
+								<Route path='/forgot-password' component={PasswordReset} />
 							</Switch>
 						</AuthProvider>
 					</Router>

@@ -28,6 +28,11 @@ const AuthProvider = ({ children }) => {
 		return auth.signOut();
 	};
 
+	// sent password reset email
+	const passwordResetEmail = (email) => {
+		return auth.sendPasswordResetEmail(email);
+	};
+
 	// get user information after login
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -42,6 +47,7 @@ const AuthProvider = ({ children }) => {
 		signup,
 		login,
 		logout,
+		passwordResetEmail,
 	};
 
 	return (
